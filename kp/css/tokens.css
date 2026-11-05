@@ -1,0 +1,56 @@
+/* Exponent Digital — дизайн-токены КП и презентаций.
+   Основа: тёмная гамма с оранжевым акцентом (по мотивам raytsystem.ru),
+   контент со скриншотами — на белых блоках. */
+
+@font-face { font-family: "Inter"; font-weight: 100 900; font-display: block;
+  src: url("fonts/inter-cyrillic-wght-normal.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Inter"; font-weight: 100 900; font-display: block;
+  src: url("fonts/inter-latin-wght-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 100 800; font-display: block;
+  src: url("fonts/jetbrains-mono-cyrillic-wght-normal.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "JetBrains Mono"; font-weight: 100 800; font-display: block;
+  src: url("fonts/jetbrains-mono-latin-wght-normal.woff2") format("woff2"); }
+@font-face { font-family: "Montserrat"; font-weight: 100 900; font-display: block;
+  src: url("fonts/montserrat-cyrillic-wght-normal.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+@font-face { font-family: "Montserrat"; font-weight: 100 900; font-display: block;
+  src: url("fonts/montserrat-latin-wght-normal.woff2") format("woff2"); }
+
+:root {
+  /* фон и поверхности */
+  --ed-bg:          #0d1117;   /* фон страницы */
+  --ed-surface:     #14171a;   /* тёмная карточка */
+  --ed-surface-2:   #1c1f25;   /* карточка внутри карточки */
+  --ed-divider:     #2a2f38;
+  --ed-white-card:  #ffffff;   /* белый блок под скриншоты и таблицы */
+  --ed-white-soft:  #f2efe9;   /* подложка внутри белого блока */
+
+  /* текст */
+  --ed-fg:          #ffffff;   /* заголовки на тёмном */
+  --ed-fg-prose:    #c2c8d4;   /* основной текст на тёмном */
+  --ed-fg-muted:    #8b93a3;   /* подписи на тёмном */
+  --ed-ink:         #14171a;   /* текст на белом */
+  --ed-ink-muted:   #5c554a;   /* подписи на белом */
+
+  /* акцент */
+  --ed-orange:      #ef9f27;
+  --ed-orange-soft: #e28531;
+  --ed-orange-deep: #cf7b3d;
+  --ed-orange-rust: #8d4814;
+  --ed-orange-bg:   rgba(239, 159, 39, 0.10);
+  --ed-orange-line: rgba(239, 159, 39, 0.35);
+
+  /* шрифты */
+  --ed-font-display: "Inter", system-ui, sans-serif;   /* заголовки: 700–800, трекинг −0.03em */
+  --ed-font-body:    "Inter", system-ui, sans-serif;   /* текст: 400–500 */
+  --ed-font-mono:    "JetBrains Mono", ui-monospace, monospace; /* метки, номера, подписи */
+  --ed-font-logo:    "Montserrat", sans-serif;         /* текстовый логотип */
+
+  /* геометрия */
+  --ed-radius-xl: 36px;
+  --ed-radius-lg: 24px;
+  --ed-radius-md: 16px;
+  --ed-radius-pill: 999px;
+}

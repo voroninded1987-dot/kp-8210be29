@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Презентация — ремонт квартир</title>
+<link rel="stylesheet" href="css/kp.css">
+<style>
+.rcases { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 20px; min-height: 0; }
+.step .n { width: 64px; height: 64px; font-size: 24px; margin-bottom: 22px; }
+.rcase { display: grid; grid-template-rows: auto 1fr; background: var(--ed-surface); border: 1px solid var(--ed-divider); border-radius: var(--ed-radius-lg); overflow: hidden; min-height: 0; }
+.rcase .shot { height: 104px; background: #fff center / contain no-repeat; border-bottom: 1px solid var(--ed-divider); }
+.rcase .info { padding: 14px 22px 14px; display: flex; flex-direction: column; min-height: 0; }
+.rcase .city { font-family: var(--ed-font-mono); font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ed-orange); margin-bottom: 4px; }
+.rcase h4 { font-size: 19px; line-height: 1.2; font-weight: 700; color: var(--ed-fg); letter-spacing: -0.01em; margin-bottom: 8px; }
+.rcase .kv { margin-top: auto; gap: 4px; }
+.rcase .kv div { font-size: 17px; padding-bottom: 5px; }
+.chat { background: #dde6f0; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 14px; min-height: 0; overflow: hidden; }
+.chat .hd { display: flex; align-items: center; gap: 10px; padding-bottom: 8px; border-bottom: 1px solid #c3cfdd; font-size: 15px; font-weight: 700; color: #14171a; }
+.chat .hd i { width: 30px; height: 30px; border-radius: 50%; background: #ef9f27; display: inline-block; flex: none; }
+.chat .hd small { display: block; font-weight: 400; font-size: 12px; color: #6b7686; }
+.bub { background: #fff; border-radius: 14px; padding: 16px 16px; font-size: 18.5px; line-height: 1.45; color: #14171a; box-shadow: 0 1px 2px rgba(0,0,0,.1); }
+.bub .t { color: #2b6cd4; font-weight: 700; }
+.bub .mask { display: inline-block; width: 118px; height: 12px; border-radius: 4px; background: #cdd5e0; vertical-align: -1px; }
+.tt.six ul.list li { font-size: 18px; line-height: 1.4; }
+.tt.six .col { padding: 22px 16px; }
+.tt.six .col-h { font-size: 21px; padding: 16px 12px; }
+.scases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; min-height: 0; }
+.scase { display: grid; grid-template-columns: 320px 1fr; background: #fff; border-radius: var(--ed-radius-lg); overflow: hidden; color: #14171a; min-height: 0; }
+.scase .shot { background: #fff center top / cover no-repeat; border-right: 1px solid #e7e2d8; }
+.scase .info { padding: 18px 18px 16px 20px; display: flex; flex-direction: column; min-height: 0; }
+.scase .city { font-family: var(--ed-font-mono); font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ed-orange-deep); margin-bottom: 6px; }
+.scase h4 { font-size: 21px; line-height: 1.2; font-weight: 700; color: #14171a; letter-spacing: -0.01em; margin-bottom: 14px; }
+.scase .kv { margin-top: auto; gap: 7px; }
+.scase .kv div { font-size: 14px; white-space: nowrap; color: #5c554a; border-bottom: 1px solid #e7e2d8; padding-bottom: 7px; }
+.scase .kv div:last-child { border-bottom: 0; padding-bottom: 0; }
+.scase .kv b { color: #14171a; }
+.rcases3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; min-height: 0; }
+.price .tot { display: block; margin-top: 10px; font-family: var(--ed-font-body); font-size: 22px; font-weight: 500; letter-spacing: 0; color: var(--ed-fg-muted); text-align: right; }
+.price .tot b { color: var(--ed-fg); font-weight: 700; }
+.terms4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.terms4 .dcard { padding: 18px 24px; }
+.terms4 .dcard h3 { font-size: 30px; margin: 0 0 6px; }
+.terms4 .dcard p { font-size: 17px; line-height: 1.38; }
+.terms4 .dcard .label { margin-bottom: 6px; }
+a.lnk { display: block; font-family: var(--ed-font-mono); font-size: 17px; color: #f3c98a; text-decoration: none; padding: 9px 0; border-bottom: 1px solid var(--ed-divider); }
+.tt.six ul.list li { font-size: 19px; line-height: 1.38; }
+.tt.six ul.list { gap: 14px; }
+.tt.six .col { padding: 20px 18px; }
+</style>
+<style>
+.pc { display: flex; flex-direction: column; background: var(--ed-surface); border: 1px solid var(--ed-divider); border-radius: var(--ed-radius-lg); overflow: hidden; min-height: 0; }
+.pc .ph { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 18px 10px; }
+.pc .city { font-family: var(--ed-font-mono); font-size: 16px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ed-orange); }
+.pc .chip { font-family: var(--ed-font-mono); font-size: 12.5px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--ed-orange-line); background: var(--ed-orange-bg); color: #f3c98a; white-space: nowrap; }
+.pc .pimg { flex: 1; min-height: 70px; margin: 0 14px; border-radius: 12px; background: #fff center top / cover no-repeat; border: 1px solid #e7e2d8; }
+.pc .pcab { flex: none; margin: 8px 14px 0; border-radius: 10px; background: #fff center / 100% 100% no-repeat; border: 1px solid #e7e2d8; }
+.pc .pcap { margin: 4px 18px 0; font-family: var(--ed-font-mono); font-size: 11.5px; color: var(--ed-fg-muted); }
+.pc .pads { flex: none; display: flex; justify-content: center; gap: 10px; margin: 6px 14px 0; height: 128px; }
+.pc .pads div { flex: none; height: 100%; background: #fff center / contain no-repeat; border: 1px solid #e7e2d8; border-radius: 8px; }
+.pc .pinfo { padding: 8px 18px 14px; display: flex; flex-direction: column; flex: none; }
+.pc .pt { font-size: 15.5px; line-height: 1.38; color: var(--ed-fg-prose); margin-bottom: 8px; }
+.pc .pt b { color: var(--ed-fg); font-weight: 600; }
+.pc .kvg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; }
+.pc .kvg div { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; color: var(--ed-fg-muted); border-bottom: 1px solid var(--ed-divider); padding-bottom: 3px; }
+.pc .kvg b { color: var(--ed-fg); font-weight: 600; white-space: nowrap; }
+.pc .av { margin-top: 8px; padding: 6px 10px; border-radius: 10px; background: var(--ed-surface-2); border: 1px dashed var(--ed-divider); font-size: 13.5px; line-height: 1.3; color: var(--ed-fg-prose); }
+.pc .av b { color: var(--ed-orange); font-weight: 600; }
+.pnote { margin-top: 10px; font-size: 14px; color: var(--ed-fg-muted); }
+</style>
+
+<style id="viewer">
+html,body{background:#06080b;height:auto}
+body{scroll-snap-type:y mandatory;overflow-y:scroll}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+.slide{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;scroll-snap-align:start;scroll-snap-stop:always;content-visibility:auto;contain-intrinsic-size:100vw 100vh}
+.slide .badge{height:34px;display:flex;align-items:center;gap:10px;font:500 15px/1 'JetBrains Mono',monospace;color:#8b93a3;letter-spacing:.04em}
+.slide .badge b{color:#ef9f27;font-weight:600;font-size:18px}
+.slide .box{position:relative;overflow:hidden;border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.slide .box .page{position:absolute;left:0;top:0;transform-origin:0 0;page-break-after:auto}
+#hint{position:fixed;right:16px;bottom:12px;font:12px 'JetBrains Mono',monospace;color:#5c6372;z-index:5}
+@media print{html,body{scroll-snap-type:none;overflow:visible}.slide{height:auto;display:block;content-visibility:visible}.slide .badge,#hint{display:none}.slide .box{box-shadow:none;border-radius:0;overflow:visible;width:auto!important;height:auto!important}.slide .box .page{position:relative;transform:none!important;page-break-after:always}}
+</style>
+</head>
+<body>
+
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">презентация · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:60px;margin-bottom:16px">
+    <div style="flex:1">
+      <h1 style="font-family:var(--ed-font-display);font-weight:800;color:var(--ed-fg);font-size:52px;line-height:1.04;letter-spacing:-0.035em;margin:0">Внедряем преднастроенные системы привлечения клиентов в&nbsp;<span class="accent">ремонт квартир</span></h1>
+    </div>
+  </div>
+  <div class="body" style="grid-template-rows:minmax(0,1fr) auto;gap:0">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;min-height:0">
+      <div class="pc">
+        <div class="ph"><div class="city">Пенза</div><div class="chip">комплексная система</div></div>
+        <div style="flex:1;min-height:70px;margin:0 14px;display:flex;gap:10px"><div class="pimg" style="flex:1;margin:0;background-image:url('img/site-l3.jpg')"></div><div class="pimg" style="flex:1;margin:0;background-image:url('img/case-penza.jpg');background-size:cover"></div></div>
+        <div class="pcab" style="height:134px;background-image:url('img/full-penza.png')"></div>
+        <div class="pads" style="height:170px"><div style="width:97px;background-image:url('img/avito-1-penza.jpg')"></div><div style="width:163px;background-image:url('img/avito-2-penza.jpg')"></div><div style="width:78px;background-image:url('img/ad-direkt-1-penza.jpg')"></div><div style="width:76px;background-image:url('img/ad-direkt-2-penza.jpg')"></div></div>
+        <div class="pinfo"><div class="pt" style="margin:0;font-size:17px">Внедрили <b>комплексную систему</b> в&nbsp;Пензе — сайт, Директ, Авито ADS и&nbsp;бот-прогрев</div></div>
+      </div>      <div class="pc">
+        <div class="ph"><div class="city">Москва</div><div class="chip">комплексная система</div></div>
+        <div class="pimg" style="background-image:url('img/site-l2.jpg')"></div>
+        <div class="pcab" style="height:164px;background-image:url('img/full-moskva.jpg')"></div>
+        <div class="pads" style="height:170px"><div style="width:97px;background-image:url('img/avito-1-moskva.jpg')"></div><div style="width:163px;background-image:url('img/avito-2-moskva.jpg')"></div><div style="width:78px;background-image:url('img/ad-direkt-1-moskva.jpg')"></div><div style="width:76px;background-image:url('img/ad-direkt-2-moskva.jpg')"></div></div>
+        <div class="pinfo"><div class="pt" style="margin:0;font-size:17px">Внедрили <b>комплексную систему</b> в&nbsp;Москве — сайт, Директ, Авито ADS и&nbsp;бот-прогрев</div></div>
+      </div>      <div class="pc">
+        <div class="ph"><div class="city">Самара</div><div class="chip">«Быстрый старт»</div></div>
+        <div class="pimg" style="background-image:url('img/site-samara.jpg')"></div>
+        <div class="pcab" style="height:184px;background-image:url('img/full-samara.png')"></div>
+        <div class="pads" style="height:170px"><div style="width:78px;background-image:url('img/ad-direkt-1-samara.jpg')"></div><div style="width:76px;background-image:url('img/ad-direkt-2-samara.jpg')"></div><div style="width:80px;background-image:url('img/ad-direkt-3-samara.jpg')"></div></div>
+        <div class="pinfo"><div class="pt" style="margin:0;font-size:17px">Внедрили <b>базовую связку</b> в&nbsp;Самаре — страница с&nbsp;квизом, Директ и&nbsp;бот-прогрев</div></div>
+      </div>    </div>
+  </div>
+  <div class="pageno">01</div>
+</section>
+
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">презентация · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="head" style="margin-bottom:14px"><div>
+    <div class="kicker">Кейсы · «Быстрый старт»: страница с квизом + Директ + бот</div>
+    <h2 class="title" style="font-size:46px">Базовая связка в&nbsp;разных городах</h2>
+  </div><div class="tag">кейсы</div></div>
+  <div class="body" style="grid-template-rows:minmax(0,1fr) auto;gap:0">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;min-height:0">
+      <div class="pc">
+        <div class="ph"><div class="city">Владивосток</div><div class="chip">«Быстрый старт»</div></div>
+        <div class="pimg" style="background-image:url('img/site-vladivostok.jpg')"></div>
+        <div class="pcab" style="height:157px;background-image:url('img/full-vladivostok.jpg')"></div>
+        <div class="pads" style="height:170px"><div style="width:78px;background-image:url('img/ad-direkt-1-vladivostok.jpg')"></div><div style="width:76px;background-image:url('img/ad-direkt-2-vladivostok.jpg')"></div><div style="width:80px;background-image:url('img/ad-direkt-3-vladivostok.jpg')"></div></div>
+        <div class="pinfo"><div class="pt" style="margin:0;font-size:17px">Внедрили <b>базовую связку</b> во&nbsp;Владивостоке — страница с&nbsp;квизом, Директ и&nbsp;бот-прогрев</div></div>
+      </div>      <div class="pc">
+        <div class="ph"><div class="city">Ростов-на-Дону</div><div class="chip">«Быстрый старт»</div></div>
+        <div class="pimg" style="background-image:url('img/site-rostov.jpg')"></div>
+        <div class="pcab" style="height:199px;background-image:url('img/full-rostov.jpg')"></div>
+        <div class="pads" style="height:170px"><div style="width:78px;background-image:url('img/ad-direkt-1-rostov.jpg')"></div><div style="width:76px;background-image:url('img/ad-direkt-2-rostov.jpg')"></div><div style="width:80px;background-image:url('img/ad-direkt-3-rostov.jpg')"></div></div>
+        <div class="pinfo"><div class="pt" style="margin:0;font-size:17px">Внедрили <b>базовую связку</b> в&nbsp;Ростове-на-Дону — страница с&nbsp;квизом, Директ и&nbsp;бот-прогрев</div></div>
+      </div>      <div class="pc">
+        <div class="ph"><div class="city">Тюмень</div><div class="chip">«Быстрый старт»</div></div>
+        <div class="pimg" style="background-image:url('img/site-tyumen.jpg')"></div>
+        <div class="pcab" style="height:181px;background-image:url('img/full-tyumen.png')"></div>
+        <div class="pads" style="height:170px"><div style="width:78px;background-image:url('img/ad-direkt-1-tyumen.jpg')"></div><div style="width:76px;background-image:url('img/ad-direkt-2-tyumen.jpg')"></div><div style="width:80px;background-image:url('img/ad-direkt-3-tyumen.jpg')"></div></div>
+        <div class="pinfo"><div class="pt" style="margin:0;font-size:17px">Внедрили <b>базовую связку</b> в&nbsp;Тюмени — страница с&nbsp;квизом, Директ и&nbsp;бот-прогрев</div></div>
+      </div>    </div>
+  </div>
+  <div class="pageno">02</div>
+</section>
+
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">презентация · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="head" style="margin-bottom:14px"><div>
+    <div class="kicker">Кейсы · «Быстрый старт»</div>
+    <h2 class="title" style="font-size:46px">Та же связка: цена зависит от города и конкуренции</h2>
+  </div><div class="tag">кейсы</div></div>
+  <div class="body" style="grid-template-rows:minmax(0,1fr) auto;gap:0">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px;min-height:0">
+      <div class="pc">
+        <div class="ph"><div class="city">Краснодар</div><div class="chip">«Быстрый старт»</div></div>
+        <div class="pimg" style="background-image:url('img/site-krasnodar.png');background-size:100% 100%"></div>
+        <div class="pcab" style="height:119px;background-image:url('img/full-krasnodar.jpg')"></div>
+        <div class="pads" style="height:170px"><div style="width:78px;background-image:url('img/ad-direkt-1-krasnodar.jpg')"></div><div style="width:76px;background-image:url('img/ad-direkt-2-krasnodar.jpg')"></div><div style="width:80px;background-image:url('img/ad-direkt-3-krasnodar.jpg')"></div></div>
+        <div class="pinfo"><div class="pt" style="margin:0;font-size:17px">Внедрили <b>базовую связку</b> в&nbsp;Краснодаре — страница с&nbsp;квизом, Директ и&nbsp;бот-прогрев</div></div>
+      </div>
+      <div class="pc">
+        <div class="ph"><div class="city">Рязань</div><div class="chip">«Быстрый старт»</div></div>
+        <div class="pimg" style="background-image:url('img/site-ryazan.jpg')"></div>
+        <div class="pcab" style="height:221px;background-image:url('img/full-ryazan.jpg')"></div>
+        <div class="pads" style="height:170px"><div style="width:78px;background-image:url('img/ad-direkt-1-ryazan.jpg')"></div><div style="width:76px;background-image:url('img/ad-direkt-2-ryazan.jpg')"></div><div style="width:80px;background-image:url('img/ad-direkt-3-ryazan.jpg')"></div></div>
+        <div class="pinfo"><div class="pt" style="margin:0;font-size:17px">Внедрили <b>базовую связку</b> в&nbsp;Рязани — страница с&nbsp;квизом, Директ и&nbsp;бот-прогрев</div></div>
+      </div>      <div class="pc">
+        <div class="ph"><div class="city">Санкт-Петербург</div><div class="chip">«Быстрый старт»</div></div>
+        <div class="pimg" style="background-image:url('img/site-spb.jpg')"></div>
+        <div class="pcab" style="height:159px;background-image:url('img/full-spb.jpg')"></div>
+        <div class="pads" style="height:170px"><div style="width:78px;background-image:url('img/ad-direkt-1-spb.jpg')"></div><div style="width:76px;background-image:url('img/ad-direkt-2-spb.jpg')"></div><div style="width:80px;background-image:url('img/ad-direkt-3-spb.jpg')"></div></div>
+        <div class="pinfo"><div class="pt" style="margin:0;font-size:17px">Внедрили <b>базовую связку</b> в&nbsp;Санкт-Петербурге — страница с&nbsp;квизом, Директ и&nbsp;бот-прогрев</div></div>
+      </div>      <div class="pc">
+        <div class="ph"><div class="city">Ярославль</div><div class="chip">«Быстрый старт»</div></div>
+        <div class="pimg" style="background-image:url('img/site-yaroslavl.jpg')"></div>
+        <div class="pcab" style="height:182px;background-image:url('img/full-yaroslavl.jpg')"></div>
+        <div class="pads" style="height:170px"><div style="width:78px;background-image:url('img/ad-direkt-1-yaroslavl.jpg')"></div><div style="width:76px;background-image:url('img/ad-direkt-2-yaroslavl.jpg')"></div><div style="width:80px;background-image:url('img/ad-direkt-3-yaroslavl.jpg')"></div></div>
+        <div class="pinfo"><div class="pt" style="margin:0;font-size:17px">Внедрили <b>базовую связку</b> в&nbsp;Ярославле — страница с&nbsp;квизом, Директ и&nbsp;бот-прогрев</div></div>
+      </div>    </div>
+  </div>
+  <div class="pageno">03</div>
+</section>
+
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">презентация · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="head"><div>
+    <div class="kicker">Клиенты благодарят · Ставрополь</div>
+    <h2 class="title">Разработали сайт и базовую систему привлечения клиентов <span class="accent">в&nbsp;Ставрополе</span></h2>
+  </div><div class="tag">отзыв клиента</div></div>
+  <div class="body" style="grid-template-columns:1fr 1fr 500px">
+    <div class="wcard" style="align-self:start"><div class="wcap"><b>01</b> · клиент благодарит за работу</div><div class="img framed" style="flex:none;height:560px;background-color:#fff;background-image:url('img/thanks-chat.png');background-size:contain;background-position:center"></div></div>
+    <div class="wcard" style="align-self:start"><div class="wcap"><b>02</b> · сайт, который мы ему сделали</div><div class="img framed" style="flex:none;height:560px;background-color:#fff;background-image:url('img/thanks-site.png');background-size:contain;background-position:center"></div></div>
+    <div class="dcard accent" style="display:flex;flex-direction:column;align-self:start;min-height:640px"><div class="label">Результат</div>
+      <h3>Сайт + базовая система привлечения клиентов</h3>
+      <p>Страница под услуги, квиз, реклама в&nbsp;Яндекс Директе и&nbsp;бот-прогрев — сразу у&nbsp;клиента в&nbsp;Ставрополе.</p>
+      <div class="kv" style="margin:18px 0 14px"><div>Цена заявки (в среднем)<b>≈ 850&nbsp;₽</b></div><div>Квалифицированных заявок<b>68</b></div></div>
+      <p style="margin-top:auto;font-size:15px;color:#8b93a3">Результат зависит от города и конкуренции и не является гарантией.</p>
+    </div>
+  </div>
+  <div class="pageno">04</div>
+</section>
+
+
+<div id="hint">← → / пробел / колесо · F — во весь экран</div>
+<script>
+(function(){
+  var pages=[].slice.call(document.querySelectorAll('.page')),total=pages.length,slides=[];
+  pages.forEach(function(p,i){
+    var s=document.createElement('div');s.className='slide';
+    var b=document.createElement('div');b.className='badge';b.innerHTML='<b>'+String(i+1).padStart(2,'0')+'</b> / '+String(total).padStart(2,'0');
+    var box=document.createElement('div');box.className='box';
+    p.parentNode.insertBefore(s,p);s.appendChild(b);s.appendChild(box);box.appendChild(p);slides.push({s:s,box:box,p:p});
+  });
+  function fit(){
+    var k=Math.min(innerWidth/1920,(innerHeight-44)/1080);
+    slides.forEach(function(o){o.box.style.width=(1920*k)+'px';o.box.style.height=(1080*k)+'px';o.p.style.transform='scale('+k+')'});
+  }
+  function cur(){return Math.round(scrollY/innerHeight)}
+  function go(i){i=Math.max(0,Math.min(total-1,i));slides[i].s.scrollIntoView({behavior:'smooth',block:'start'});history.replaceState(null,'','#'+(i+1))}
+  addEventListener('resize',fit);fit();
+  addEventListener('keydown',function(e){
+    var k=e.key;
+    if(k==='ArrowRight'||k==='ArrowDown'||k==='PageDown'||k===' '){e.preventDefault();go(cur()+1)}
+    else if(k==='ArrowLeft'||k==='ArrowUp'||k==='PageUp'){e.preventDefault();go(cur()-1)}
+    else if(k==='Home'){e.preventDefault();go(0)}else if(k==='End'){e.preventDefault();go(total-1)}
+    else if(k==='f'||k==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+  });
+  var h=parseInt(location.hash.slice(1),10);if(h>0&&h<=total)setTimeout(function(){document.documentElement.style.scrollBehavior='auto';slides[h-1].s.scrollIntoView({block:'start'});document.documentElement.style.scrollBehavior=''},50);
+})();
+</script>
+</body>
+</html>

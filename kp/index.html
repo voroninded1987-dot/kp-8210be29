@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>КП — ремонт квартир (шаблон)</title>
+<link rel="stylesheet" href="css/kp.css">
+<style>
+.rcases { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 20px; min-height: 0; }
+.step .n { width: 64px; height: 64px; font-size: 24px; margin-bottom: 22px; }
+.rcase { display: grid; grid-template-rows: auto 1fr; background: var(--ed-surface); border: 1px solid var(--ed-divider); border-radius: var(--ed-radius-lg); overflow: hidden; min-height: 0; }
+.rcase .shot { height: 104px; background: #fff center / contain no-repeat; border-bottom: 1px solid var(--ed-divider); }
+.rcase .info { padding: 14px 22px 14px; display: flex; flex-direction: column; min-height: 0; }
+.rcase .city { font-family: var(--ed-font-mono); font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ed-orange); margin-bottom: 4px; }
+.rcase h4 { font-size: 19px; line-height: 1.2; font-weight: 700; color: var(--ed-fg); letter-spacing: -0.01em; margin-bottom: 8px; }
+.rcase .kv { margin-top: auto; gap: 4px; }
+.rcase .kv div { font-size: 17px; padding-bottom: 5px; }
+.chat { background: #dde6f0; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 14px; min-height: 0; overflow: hidden; }
+.chat .hd { display: flex; align-items: center; gap: 10px; padding-bottom: 8px; border-bottom: 1px solid #c3cfdd; font-size: 15px; font-weight: 700; color: #14171a; }
+.chat .hd i { width: 30px; height: 30px; border-radius: 50%; background: #ef9f27; display: inline-block; flex: none; }
+.chat .hd small { display: block; font-weight: 400; font-size: 12px; color: #6b7686; }
+.bub { background: #fff; border-radius: 14px; padding: 16px 16px; font-size: 18.5px; line-height: 1.45; color: #14171a; box-shadow: 0 1px 2px rgba(0,0,0,.1); }
+.bub .t { color: #2b6cd4; font-weight: 700; }
+.bub .mask { display: inline-block; width: 118px; height: 12px; border-radius: 4px; background: #cdd5e0; vertical-align: -1px; }
+.tt.six ul.list li { font-size: 18px; line-height: 1.4; }
+.tt.six .col { padding: 22px 16px; }
+.tt.six .col-h { font-size: 21px; padding: 16px 12px; }
+.scases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; min-height: 0; }
+.scase { display: grid; grid-template-columns: 320px 1fr; background: #fff; border-radius: var(--ed-radius-lg); overflow: hidden; color: #14171a; min-height: 0; }
+.scase .shot { background: #fff center top / cover no-repeat; border-right: 1px solid #e7e2d8; }
+.scase .info { padding: 18px 18px 16px 20px; display: flex; flex-direction: column; min-height: 0; }
+.scase .city { font-family: var(--ed-font-mono); font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ed-orange-deep); margin-bottom: 6px; }
+.scase h4 { font-size: 21px; line-height: 1.2; font-weight: 700; color: #14171a; letter-spacing: -0.01em; margin-bottom: 14px; }
+.scase .kv { margin-top: auto; gap: 7px; }
+.scase .kv div { font-size: 14px; white-space: nowrap; color: #5c554a; border-bottom: 1px solid #e7e2d8; padding-bottom: 7px; }
+.scase .kv div:last-child { border-bottom: 0; padding-bottom: 0; }
+.scase .kv b { color: #14171a; }
+.rcases3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; min-height: 0; }
+.price .tot { display: block; margin-top: 10px; font-family: var(--ed-font-body); font-size: 22px; font-weight: 500; letter-spacing: 0; color: var(--ed-fg-muted); text-align: right; }
+.price .tot b { color: var(--ed-fg); font-weight: 700; }
+.terms4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.terms4 .dcard { padding: 18px 24px; }
+.terms4 .dcard h3 { font-size: 30px; margin: 0 0 6px; }
+.terms4 .dcard p { font-size: 17px; line-height: 1.38; }
+.terms4 .dcard .label { margin-bottom: 6px; }
+a.lnk { display: block; font-family: var(--ed-font-mono); font-size: 17px; color: #f3c98a; text-decoration: none; padding: 9px 0; border-bottom: 1px solid var(--ed-divider); }
+.tt.six ul.list li { font-size: 19px; line-height: 1.38; }
+.tt.six ul.list { gap: 14px; }
+.tt.six .col { padding: 20px 18px; }
+.tt.six .col{padding:14px 16px}.tt.six ul.list{gap:9px}.tt.six ul.list li{font-size:18px;line-height:1.35}.tt.six .col-h{padding:12px 14px;font-size:20px}.tt.six .grp{padding:7px 14px}.tariff{gap:12px}.tt.six{margin-bottom:6px}
+</style>
+
+<style id="viewer">
+html,body{background:#06080b;height:auto}
+body{scroll-snap-type:y mandatory;overflow-y:scroll}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+.slide{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;scroll-snap-align:start;scroll-snap-stop:always;content-visibility:auto;contain-intrinsic-size:100vw 100vh}
+.slide .badge{height:34px;display:flex;align-items:center;gap:10px;font:500 15px/1 'JetBrains Mono',monospace;color:#8b93a3;letter-spacing:.04em}
+.slide .badge b{color:#ef9f27;font-weight:600;font-size:18px}
+.slide .box{position:relative;overflow:hidden;border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.slide .box .page{position:absolute;left:0;top:0;transform-origin:0 0;page-break-after:auto}
+#hint{position:fixed;right:16px;bottom:12px;font:12px 'JetBrains Mono',monospace;color:#5c6372;z-index:5}
+@media print{html,body{scroll-snap-type:none;overflow:visible}.slide{height:auto;display:block;content-visibility:visible}.slide .badge,#hint{display:none}.slide .box{box-shadow:none;border-radius:0;overflow:visible;width:auto!important;height:auto!important}.slide .box .page{position:relative;transform:none!important;page-break-after:always}}
+</style>
+</head>
+<body>
+
+<!-- Блок 1. Оффер -->
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">коммерческое предложение · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="hero card-dark">
+    <div class="hero-text">
+      <div><span class="pill">Персональное предложение · Exponent.digital</span></div>
+      <h1>Система привлечения клиентов для ремонта квартир <span class="accent">в&nbsp;вашем городе</span></h1>
+      <p class="lead">Начнём с <b>маркетингового исследования</b> и соберём готовую систему: <b>реклама в&nbsp;Яндекс Директе и&nbsp;Авито ADS → квиз на&nbsp;сайте → бот-прогрев в&nbsp;мессенджере → сайт-каталог для утепления заявок</b>, чтобы вам звонили люди, которые уже прикинули стоимость ремонта и&nbsp;готовы обсуждать замер. Авито ADS и&nbsp;ваш сайт входят в&nbsp;«Комплексную систему».</p>
+      <div class="facts">
+        <div class="fact"><span class="n">01 / КАНАЛ</span><b>Яндекс Директ</b> по&nbsp;проверенной связке</div>
+        <div class="fact"><span class="n">02 / ТЕСТ</span>первые <b>2&nbsp;недели</b> — только рекламный бюджет</div>
+        <div class="fact"><span class="n">03 / ГАРАНТИЯ</span>приведём 10&nbsp;заявок со&nbsp;спросом, иначе <b>за&nbsp;услугу не&nbsp;платите</b></div>
+      </div>
+    </div>
+    <div class="shots card-white" style="gap:9px">
+      <div class="cap"><b>01</b> · готовая воронка: реклама → квиз на сайте</div>
+      <div style="flex:1.45;min-height:0;display:grid;grid-template-columns:1fr 1fr 1.2fr;grid-template-rows:minmax(0,1fr) auto;gap:6px 10px">
+        <div class="img framed" style="background-image:url('img/direkt-1.jpg');background-size:cover;background-position:center top"></div><div class="img framed" style="background-image:url('img/avito-1.png');background-size:cover;background-position:center top"></div><div class="img framed" style="background-image:url('img/quiz-remont.jpg');background-size:cover;background-position:left top"></div>
+        <div class="cap" style="font-size:12px">Яндекс Директ</div><div class="cap" style="font-size:12px">Авито ADS</div><div class="cap" style="font-size:12px">квиз на сайте</div>
+      </div>
+      <div class="cap"><b>02</b> · прогревочный бот в мессенджере</div>
+      <div style="flex:0.85;min-height:0;display:flex"><div class="img framed"  style="background-image:url('img/bot-start.png');background-size:cover;background-position:center 38%"></div></div>
+      <div class="cap"><b>03</b> · создание сайта-каталога для утепления заявок — пример: «Ремонт как надо»</div>
+      <div style="flex:1;min-height:0;display:flex"><div class="img framed" style="background-image:url('img/site-kaknado-hero.jpg');background-size:cover;background-position:center top"></div></div>
+    </div>
+  </div>
+  <div class="pageno">01</div>
+</section>
+
+<!-- Блок 2. Кейсы -->
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">коммерческое предложение · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="head"><div>
+    <div class="kicker">Кейсы · наши сайты и кабинеты Яндекс Директа</div>
+    <h2 class="title">Помогаем зарабатывать своим клиентам</h2>
+    <p class="sub">Сайты, которые мы сделали ремонтным компаниям, и&nbsp;кабинеты Яндекс Директа: одна и&nbsp;та&nbsp;же связка работает в&nbsp;разных городах.</p>
+  </div><div class="tag">наши кейсы</div></div>
+  <div class="body" style="grid-template-rows:322px minmax(0,1fr);gap:20px">
+    <div class="scases">
+      <div class="scase"><div class="shot" style="background-image:url('img/case-penza.jpg')"></div>
+        <div class="info"><div class="city">г. Пенза</div><h4>Премиум ремонт квартир</h4><div class="kv"><div>Цена заявки<b>469 ₽</b></div><div>Заявок в мес.<b>115 шт.</b></div><div>Договоров в мес.<b>2–5 шт.</b></div><div>Ср. чек договора<b>4–7 млн ₽</b></div></div></div></div>
+      <div class="scase"><div class="shot" style="background-image:url('img/case-krasnodar.jpg')"></div>
+        <div class="info"><div class="city">г. Краснодар</div><h4>Ремонт квартир под ключ</h4><div class="kv"><div>Цена заявки<b>758 ₽</b></div><div>Заявок в мес.<b>62 шт.</b></div><div>Договоров в мес.<b>2–6 шт.</b></div><div>Ср. чек договора<b>1–3 млн ₽</b></div></div></div></div>
+      <div class="scase"><div class="shot" style="background-image:url('img/case-moskva.jpg')"></div>
+        <div class="info"><div class="city">г. Москва</div><h4>Ремонт квартир</h4><div class="kv"><div>Цена заявки<b>816 ₽</b></div><div>Заявок в мес.<b>25 шт.</b></div><div>Договоров в мес.<b>1–4 шт.</b></div><div>Ср. чек договора<b>2–5 млн ₽</b></div></div></div></div>
+    </div>
+    <div class="rcases3">
+      <div class="rcase"><div class="shot" style="background-image:url('img/full-penza.png')"></div>
+        <div class="info"><div class="city">Пенза · 22.07–27.07</div><h4>Яндекс Директ · кабинет рекламы</h4><div class="kv"><div>Расход<b>5&nbsp;188&nbsp;₽</b></div><div>Обращений<b>9</b></div><div>Цена обращения<b>576&nbsp;₽</b></div></div></div></div>
+      <div class="rcase"><div class="shot" style="background-image:url('img/full-moskva.jpg')"></div>
+        <div class="info"><div class="city">Москва · 25.06–02.07</div><h4>Яндекс Директ · кабинет рекламы</h4><div class="kv"><div>Расход<b>20&nbsp;436&nbsp;₽</b></div><div>Обращений<b>25</b></div><div>Цена обращения<b>817&nbsp;₽</b></div></div></div></div>
+      <div class="rcase"><div class="shot" style="background-image:url('img/full-samara.png')"></div>
+        <div class="info"><div class="city">Самара · 19.08–02.09</div><h4>Яндекс Директ · кабинет рекламы</h4><div class="kv"><div>Расход<b>22&nbsp;950&nbsp;₽</b></div><div>Обращений<b>76</b></div><div>Цена обращения<b>302&nbsp;₽</b></div></div></div></div>
+    </div>
+  </div>
+  <div class="pageno">02</div>
+</section>
+
+<!-- Этап 0 -->
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">коммерческое предложение · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="head"><div>
+    <div class="kicker">Как устроена работа по этапам <b>· этап 0 · база</b></div>
+    <h2 class="title"><span class="num">0.</span>Маркетинговое исследование</h2>
+    <p class="sub">Прежде чем запускать рекламу, выясняем, кому и&nbsp;как её показывать в&nbsp;вашем городе.</p>
+  </div><div class="tag">Этап 0</div></div>
+  <div class="body stage">
+    <div class="wcard"><div class="wcap"><b>00</b> · из чего состоит исследование</div>
+      <div style="flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px">
+        <div class="dcard" style="background:#f7f5ef;border-color:#e7e2d8"><div class="label" style="color:#cf7b3d">01 · Аудитории</div><h3 style="color:#14171a;font-size:24px;margin:0">Кто платит от&nbsp;1&nbsp;млн</h3><p style="color:#5c554a">Сегменты по&nbsp;платёжеспособности и&nbsp;чеку</p></div>
+        <div class="dcard" style="background:#f7f5ef;border-color:#e7e2d8"><div class="label" style="color:#cf7b3d">02 · Площадки</div><h3 style="color:#14171a;font-size:24px;margin:0">Где они в&nbsp;вашем городе</h3><p style="color:#5c554a">Директ, Авито и&nbsp;другие каналы</p></div>
+        <div class="dcard" style="background:#f7f5ef;border-color:#e7e2d8"><div class="label" style="color:#cf7b3d">03 · Конкуренты</div><h3 style="color:#14171a;font-size:24px;margin:0">Что делают рядом</h3><p style="color:#5c554a">Цены, офферы, слабые места</p></div>
+        <div class="dcard" style="background:#f7f5ef;border-color:#e7e2d8"><div class="label" style="color:#cf7b3d">04 · Позиционирование</div><h3 style="color:#14171a;font-size:24px;margin:0">Чем вы отличаетесь</h3><p style="color:#5c554a">На&nbsp;этом строим офферы и&nbsp;квиз</p></div>
+      </div></div>
+    <div class="right">
+      <div class="dcard accent" style="border:2px solid var(--ed-orange)"><div class="label">Результат этапа</div><h3 style="font-size:32px;line-height:1.18;font-weight:800;margin:0 0 10px">Определили самые <span style="color:#ef9f27">платёжеспособные</span> и&nbsp;подходящие по&nbsp;чеку аудитории</h3><p>Чёткое понимание, на&nbsp;каких площадках ваша целевая аудитория в&nbsp;вашем городе, как и&nbsp;какую рекламу ей показывать — чтобы приходили клиенты <b>с&nbsp;чеком от&nbsp;миллиона рублей</b>, а&nbsp;не&nbsp;те, кому нужен ремонт ванной за&nbsp;5&nbsp;тыс.</p></div>
+      <div class="dcard"><div class="label">Что входит</div><ul class="list"><li>Анализ целевой аудитории: кто заказывает ремонт и&nbsp;с&nbsp;каким чеком</li><li>Анализ конкурентов в&nbsp;вашем городе</li><li>Позиционирование и&nbsp;оффер для рекламы</li><li>Выбор площадок и&nbsp;формата объявлений</li></ul></div>
+    </div>
+  </div>
+  <div class="pageno">03</div>
+</section>
+
+<!-- Этап 1 -->
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">коммерческое предложение · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="head"><div>
+    <div class="kicker">Как устроена работа по этапам <b>· этап 1 из 6</b></div>
+    <h2 class="title"><span class="num">1.</span>Две посадочные с&nbsp;квизом под ваш город</h2>
+    <p class="sub">Реклама приводит человека не&nbsp;на&nbsp;общий сайт компании, а&nbsp;на&nbsp;короткую страницу под одну задачу: рассчитать стоимость ремонта. Каждый элемент нацелен на&nbsp;заявку.</p>
+  </div><div class="tag">Этап 1</div></div>
+  <div class="body stage">
+    <div class="wcard"><div class="wcap"><b>01</b> · так выглядит страница с квизом (пример)</div><div class="img framed" style="background-image:url('img/landing-egokad.png')"></div></div>
+    <div class="right">
+      <div class="dcard accent" style="border:2px solid var(--ed-orange)"><div class="label">Результат этапа</div><h3 style="font-size:32px;line-height:1.18;font-weight:800;margin:0 0 10px">Два сайта, готовых к&nbsp;приёму трафика из&nbsp;<span style="color:#ef9f27">Директа и&nbsp;Авито&nbsp;ADS</span></h3><p>Первый — с&nbsp;квизом прямо на&nbsp;сайте, второй — с&nbsp;переходом в&nbsp;мессенджер. Готовы приводить <b>50–600 заявок в&nbsp;месяц</b>; заявки конвертируются в&nbsp;оплату на&nbsp;<b>7–8%</b>.</p></div>
+      <div class="pair">
+        <div class="dcard"><div class="label">Что входит</div><ul class="list"><li>Две посадочные: квиз прямо на&nbsp;сайте и&nbsp;квиз с&nbsp;переходом в&nbsp;мессенджер</li><li>Страница «Ремонт квартир под ключ» в&nbsp;вашем городе</li><li>Квиз: где ремонт, какие комнаты, площадь, вид ремонта, когда начинать</li><li>Выбор мессенджера для расчёта (MAX, Telegram, WhatsApp) или звонок</li><li>Вопрос о&nbsp;бюджете на&nbsp;м² после заявки</li><li>Передача заявки в&nbsp;бота</li></ul></div>
+        <div class="dcard"><div class="label">Как это работает</div><p>Человек приходит с&nbsp;объявления, отвечает на&nbsp;вопросы о&nbsp;квартире и&nbsp;оставляет телефон — взамен получает расчёт. Вы звоните уже зная тип жилья, площадь, вид ремонта и&nbsp;сроки.</p><p>Квиз отсекает запросы с&nbsp;бюджетом ниже порога: в&nbsp;нашей связке ремонт дешевле 15&nbsp;000&nbsp;₽ за&nbsp;м² не&nbsp;берём. <b>Задача страницы: получить заявку.</b></p></div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">04</div>
+</section>
+
+<!-- Этап 2 -->
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">коммерческое предложение · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="head"><div>
+    <div class="kicker">Как устроена работа по этапам <b>· этап 2 из 6</b></div>
+    <h2 class="title"><span class="num">2.</span>Запуск рекламы в&nbsp;Яндекс Директе</h2>
+    <p class="sub">Страница готова, теперь к&nbsp;ней нужен трафик. Мы не&nbsp;собираем рекламу с&nbsp;нуля: запускаем проверенную связку и&nbsp;адаптируем её под ваш город.</p>
+  </div><div class="tag">Этап 2</div></div>
+  <div class="body stage">
+    <div class="wcard"><div class="wcap"><b>02</b> · объявления в Яндекс Директе — примеры из наших запусков</div>
+      <div style="flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        <div class="img framed" style="background-image:url('img/direkt-1.jpg');background-size:contain"></div>
+        <div class="img framed" style="background-image:url('img/direkt-2.jpg');background-size:contain"></div>
+        <div class="img framed" style="background-image:url('img/direkt-3.jpg');background-size:contain"></div>
+      </div></div>
+    <div class="right">
+      <div class="dcard accent" style="border:2px solid var(--ed-orange)"><div class="label">Результат этапа</div><h3 style="font-size:32px;line-height:1.18;font-weight:800;margin:0 0 10px">Стабильный продающий канал: <span style="color:#ef9f27">50–600 заявок в&nbsp;месяц</span> и&nbsp;рост выручки до&nbsp;6&nbsp;млн в&nbsp;месяц</h3><p>Яндекс Директ — основной источник заявок: есть поток — бюджет можно наращивать.</p></div>
+      <div class="pair">
+        <div class="dcard"><div class="label">Что входит</div><ul class="list"><li>Запуск рекламы в&nbsp;Директе по проверенной связке на&nbsp;месяц</li><li>Объявления с&nbsp;до/после, интерьерами и&nbsp;мастером — под ваш город</li><li>Связка каждого объявления с&nbsp;квизом</li><li>Подключение целей и&nbsp;проверка передачи заявок</li></ul></div>
+        <div class="dcard"><div class="label">Почему Директ</div><p>Люди сами ищут ремонт и&nbsp;считают его стоимость в&nbsp;поиске и&nbsp;на&nbsp;сайтах Яндекса — это тот&nbsp;спрос, который нам нужен.</p><p><b>Директ — основной источник заявок: его проще всего масштабировать.</b> Пошли заявки — бюджет можно наращивать.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">05</div>
+</section>
+
+<!-- Этап 3 -->
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">коммерческое предложение · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="head"><div>
+    <div class="kicker">Как устроена работа по этапам <b>· этап 3 из 6</b></div>
+    <h2 class="title"><span class="num">3.</span>Бот-прогрев в&nbsp;мессенджере</h2>
+    <p class="sub">После квиза человек не&nbsp;остаётся один: бот сразу отвечает, знакомит с&nbsp;вашими работами и&nbsp;условиями, собирает ответы и&nbsp;передаёт заявку вам. Так заявка не&nbsp;остывает, пока вы заняты на&nbsp;объекте.</p>
+  </div><div class="tag">Этап 3</div></div>
+  <div class="body stage">
+    <div class="wcard"><div class="wcap"><b>03</b> · бот знакомит с вами и ведёт к расчёту (пример)</div>
+      <div class="img framed" style="flex:0.62;background-color:#c5d6a3;background-image:url('img/bot-start.png');background-size:cover;background-position:center 40%"></div>
+      <div class="img framed" style="flex:1;background-color:#c5d6a3;background-image:url('img/bot-intro.jpg');background-size:cover;background-position:left top"></div></div>
+    <div class="right">
+      <div class="dcard accent" style="border:2px solid var(--ed-orange)"><div class="label">Результат этапа</div><h3 style="font-size:32px;line-height:1.18;font-weight:800;margin:0 0 10px">Каждая заявка за&nbsp;минуту получает <span style="color:#ef9f27">расчёт стоимости</span> и&nbsp;сразу приходит вам</h3><p>Бот ведёт человека к&nbsp;расчёту в&nbsp;Telegram и&nbsp;MAX, прогревает фото работ и&nbsp;условиями — вам остаётся созвониться с&nbsp;тёплым клиентом.</p></div>
+      <div class="pair">
+        <div class="dcard"><div class="label">Что входит</div><ul class="list"><li>Приветствие от&nbsp;вашего имени и&nbsp;фото ваших работ</li><li>Условия: замер, проект, смета, гарантия</li><li>Акция за&nbsp;прохождение опроса — если она у&nbsp;вас есть</li><li>Вопросы о&nbsp;ремонте и&nbsp;расчёт стоимости</li><li>Telegram-бот учёта заявок: каждая сразу у&nbsp;вас</li></ul></div>
+        <div class="dcard"><div class="label">Выгода для бизнеса</div><p>Заявка сразу получает ответ и&nbsp;не&nbsp;остывает. Вы&nbsp;видите, кто пришёл, что ему нужно и&nbsp;какой бюджет — и&nbsp;звоните готовому к&nbsp;разговору человеку.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">06</div>
+</section>
+
+<!-- Этап 4 -->
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">коммерческое предложение · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="head"><div>
+    <div class="kicker">Как устроена работа по этапам <b>· этап 4 из 6</b></div>
+    <h2 class="title"><span class="num">4.</span>Система учёта заявок: материалы + своя CRM</h2>
+    <p class="sub">Заявка — ещё не&nbsp;договор. Даём всё, чтобы ни&nbsp;одно обращение не&nbsp;терялось и&nbsp;звонки превращались в&nbsp;замеры: готовую CRM и&nbsp;материалы по&nbsp;продажам.</p>
+  </div><div class="tag">Этап 4</div></div>
+  <div class="body stage">
+    <div class="wcard" style="display:grid;grid-template-rows:auto 0.86fr auto 1fr;">
+      <div class="wcap"><b>04</b> · своя CRM для учёта заявок</div>
+      <div class="img framed" style="background-image:url('img/crm-own.png');background-size:cover;background-position:left top"></div>
+      <div class="wcap"><b>05</b> · материалы по продажам: как превращать заявки в замеры и оплаты</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;min-height:0">
+        <div class="img framed cover" style="background-image:url('img/manual-1.png');background-position:left top"></div>
+        <div class="img framed cover" style="background-image:url('img/manual-2.png');background-position:left top"></div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="dcard accent" style="border:2px solid var(--ed-orange)"><div class="label">Результат этапа</div><h3 style="font-size:32px;line-height:1.18;font-weight:800;margin:0 0 10px"><span style="color:#ef9f27">Лиды не&nbsp;теряются</span>: видно, кто на&nbsp;каком этапе и&nbsp;когда замер</h3><p>Тем, у&nbsp;кого спрос отложен, можно в&nbsp;любой момент написать, напомнить или отправить предложение со&nbsp;скидкой. Доходимость от&nbsp;заявки до&nbsp;замера <b>+16% в&nbsp;среднем</b>; материалы подскажут, как назначать замеры, а&nbsp;не сливать лиды.</p></div>
+      <div class="pair">
+        <div class="dcard"><div class="label">Что входит</div><ul class="list"><li>CRM: лиды, источники, стадии сделки (новый → квалифицирован → диагностика → ждём решения), задачи, выгрузка в&nbsp;Excel, журнал</li><li>Материалы по&nbsp;продажам: как звонить, что говорить, как вести к&nbsp;замеру и&nbsp;договору</li><li>Telegram-бот учёта лидов — заявка сразу у&nbsp;вас</li></ul></div>
+        <div class="dcard"><div class="label">Главное правило из&nbsp;материалов</div><p><b>Реагируйте на&nbsp;заявку сразу, максимум — в&nbsp;течение 15&nbsp;минут.</b> Чем дольше пауза, тем сильнее клиент остывает. Звонить, а&nbsp;не&nbsp;писать: письменный диалог — только если человек сам просит.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">07</div>
+</section>
+
+<!-- Этап 5 -->
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">коммерческое предложение · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="head"><div>
+    <div class="kicker">Как устроена работа по этапам <b>· этап 5 из 6 · комплексная система</b></div>
+    <h2 class="title"><span class="num">5.</span>Та&nbsp;же воронка в&nbsp;Авито ADS</h2>
+    <p class="sub">К&nbsp;Директу добавляем второй канал: тот&nbsp;же квиз, тот&nbsp;же бот и&nbsp;те&nbsp;же заявки в&nbsp;мессенджер — но&nbsp;другая аудитория.</p>
+  </div><div class="tag">Этап 5</div></div>
+  <div class="body stage">
+    <div class="wcard"><div class="wcap"><b>06</b> · объявления в Авито ADS — примеры</div>
+      <div style="flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+        <div class="img framed" style="background-image:url('img/avito-1.png')"></div>
+        <div class="img framed" style="background-image:url('img/avito-2.png')"></div>
+        <div class="img framed" style="background-image:url('img/avito-3.png')"></div>
+      </div></div>
+    <div class="right">
+      <div class="dcard accent" style="border:2px solid var(--ed-orange)"><div class="label">Результат этапа</div><h3 style="font-size:32px;line-height:1.18;font-weight:800;margin:0 0 10px">Тот&nbsp;же результат, что и&nbsp;в&nbsp;Директе — трафик <span style="color:#ef9f27">распределяем между каналами</span></h3><p>Больше лидов и&nbsp;дешевле лиды: дорожает заявка в&nbsp;одном канале — поток не&nbsp;останавливается.</p></div>
+      <div class="pair">
+        <div class="dcard"><div class="label">Что входит</div><ul class="list"><li>Запуск рекламы в&nbsp;Авито ADS по&nbsp;проверенной связке</li><li>Свои объявления под каждую услугу: капитальный, косметический, премиум-ремонт, санузлы «под ключ», балконы и&nbsp;лоджии, ремонт в&nbsp;домах</li><li>Посадочная с&nbsp;квизом под этот канал</li><li>Отдельный учёт заявок по&nbsp;каналам</li></ul></div>
+        <div class="dcard"><div class="label">Зачем второй канал</div><p>Разные люди и&nbsp;разные моменты выбора — больше спроса в&nbsp;вашем городе. Дорожает заявка в&nbsp;одном канале — поток не&nbsp;останавливается.</p><p><b>Только в&nbsp;«Комплексной системе».</b></p></div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">08</div>
+</section>
+
+<!-- Этап 6 -->
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">коммерческое предложение · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="head"><div>
+    <div class="kicker">Как устроена работа по этапам <b>· этап 6 из 6 · комплексная система</b></div>
+    <h2 class="title"><span class="num">6.</span>Разработка вашего сайта</h2>
+    <p class="sub">Реклама приводит человека на&nbsp;квиз. А&nbsp;собственный сайт показывает ваши работы, этапы и&nbsp;условия и&nbsp;прогревает заявку: после квиза человек идёт смотреть, кто вы.</p>
+  </div><div class="tag">Этап 6</div></div>
+  <div class="body stage">
+    <div class="wcard"><div class="wcap"><b>07</b> · сайты, которые мы сделали ремонтным компаниям</div>
+      <div style="flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:10px 12px">
+        <div style="display:flex;flex-direction:column;gap:6px;min-height:0"><div class="img framed cover" style="background-image:url('img/site-l1.jpg');background-position:left top"></div><div class="wcap"><b>Ставрополь</b> · kaknado-pro.github.io/kvadrat-vkube</div></div>
+        <div style="display:flex;flex-direction:column;gap:6px;min-height:0"><div class="img framed cover" style="background-image:url('img/site-l2.jpg');background-position:left top"></div><div class="wcap"><b>Москва</b> · kaknado-pro.github.io/remont-moscow</div></div>
+        <div style="display:flex;flex-direction:column;gap:6px;min-height:0"><div class="img framed cover" style="background-image:url('img/site-l3.jpg');background-position:left top"></div><div class="wcap"><b>Пенза</b> · kaknado-pro.github.io/remont-kak-nado</div></div>
+        <div style="display:flex;flex-direction:column;gap:6px;min-height:0"><div class="img framed cover" style="background-image:url('img/site-l4.jpg');background-position:left top"></div><div class="wcap"><b>Краснодар</b> · 23region-remonta.github.io</div></div>
+      </div></div>
+    <div class="right">
+      <div class="dcard accent" style="border:2px solid var(--ed-orange)"><div class="label">Результат этапа</div><h3 style="font-size:32px;line-height:1.18;font-weight:800;margin:0 0 10px">Свой сайт — <span style="color:#ef9f27">новый инструмент продаж</span></h3><p>Лиды с&nbsp;рекламы идут на&nbsp;него, видят ваши работы и&nbsp;прогреваются вашей компанией. Отсеиваем тех, кому нужно просто поменять плинтус в&nbsp;ванной: нам нужен ремонт под ключ и&nbsp;смежное.</p></div>
+      <div class="pair">
+        <div class="dcard"><div class="label">Что входит</div><ul class="list"><li>Сайт под вашу компанию: работы, этапы ремонта, условия, контакты</li><li>Ссылка на&nbsp;сайт — на&nbsp;странице «Спасибо» после заявки и&nbsp;в&nbsp;боте</li><li>Основа, на&nbsp;которую потом можно запускать SEO</li></ul></div>
+        <div class="dcard"><div class="label">Зачем сайт</div><p>Под объявлением человек «заходит на&nbsp;сайт и&nbsp;смотрит работы» — доверие растёт, заявка прогревается, а&nbsp;трафик из&nbsp;рекламы тоже приходит на&nbsp;него.</p><p><b>Только в&nbsp;«Комплексной системе».</b></p></div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">09</div>
+</section>
+<!-- Работаем по договору -->
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">коммерческое предложение · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="head"><div>
+    <div class="kicker">Условия и гарантии</div>
+    <h2 class="title">Работаем по&nbsp;договору — и&nbsp;отвечаем за&nbsp;запуск рублём</h2>
+    <p class="sub">Состав работ и&nbsp;оплату фиксируем в&nbsp;договоре до&nbsp;старта. Вы&nbsp;заранее знаете, что получите и&nbsp;за&nbsp;какие деньги, а&nbsp;за&nbsp;услугу платите только после того, как за&nbsp;2&nbsp;недели пришло не&nbsp;менее 10&nbsp;заявок со&nbsp;спросом.</p>
+  </div><div class="tag">договор</div></div>
+  <div class="body" style="grid-template-columns: 1fr 760px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:20px;min-height:0">
+      <div class="dcard accent"><div class="label">01 · гарантия</div><h3>Приводим не&nbsp;менее 10&nbsp;заявок со&nbsp;спросом за&nbsp;2&nbsp;недели, иначе за&nbsp;услугу не&nbsp;платите</h3><p>Первый платёж — только рекламный бюджет.</p></div>
+      <div class="dcard"><div class="label">02 · тест</div><h3>2&nbsp;недели на&nbsp;обучение кампании</h3><p>В&nbsp;начале стоимость обращения может быть выше, потом кампания стабилизируется.</p></div>
+      <div class="dcard"><div class="label">03 · бюджет</div><h3>Платите за&nbsp;людей с&nbsp;бюджетом</h3><p>Квиз отсекает запросы дешевле 15&nbsp;000&nbsp;₽ за&nbsp;м² ещё до&nbsp;того, как заявка попадёт к&nbsp;вам.</p></div>
+      <div class="dcard"><div class="label">04 · прозрачность</div><h3>Все цифры у&nbsp;вас</h3><p>У&nbsp;вас свой доступ к&nbsp;рекламному кабинету: расход, заявки и&nbsp;стоимость заявки видны в&nbsp;любой момент.</p></div>
+    </div>
+    <div style="display:grid;grid-template-rows:1fr 1fr;gap:20px;min-height:0">
+      <div class="wcard">
+        <div class="wcap"><b>договор</b> · стороны и предмет договора</div>
+        <div class="img framed cover" style="background-color:#fff;background-image:url('img/contract-p1.png')"></div>
+      </div>
+      <div class="wcard">
+        <div class="wcap"><b>договор</b> · состав услуг и этапы</div>
+        <div style="flex:1;min-height:0;border:1px solid #e7e2d8;border-radius:12px;background:#fff;display:grid;grid-template-rows:1fr auto 1fr;overflow:hidden">
+          <div class="img" style="border-radius:0;background-color:#fff;background-size:contain;background-position:left center;background-image:url('img/contract-p2-head.jpg')"></div>
+          <div style="text-align:center;color:#b9b2a5;font-size:18px;letter-spacing:6px;line-height:1">· · ·</div>
+          <div class="img" style="border-radius:0;background-color:#fff;background-size:contain;background-position:left center;background-image:url('img/contract-p2-site.jpg')"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pageno">10</div>
+</section>
+
+<!-- Как будет идти работа -->
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">коммерческое предложение · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="head"><div>
+    <div class="kicker">План запуска</div>
+    <h2 class="title">Как будет идти работа</h2>
+    <p class="sub">Маршрут запуска разбит на&nbsp;короткие шаги: знакомство и&nbsp;исследование, подготовка всего за&nbsp;4–5&nbsp;дней, запуск и&nbsp;тест на&nbsp;2&nbsp;недели, решение, продление.</p>
+  </div><div class="tag">5 шагов</div></div>
+  <div class="body steps">
+    <div class="dcard step"><div class="n">01</div><h3>Знакомство и исследование</h3><p>Знакомимся с&nbsp;компанией и&nbsp;делаем маркетинговое исследование: аудитория, конкуренты, позиционирование. Узнаём, нужны ли клиенты только на&nbsp;ремонт «под ключ» или и&nbsp;на&nbsp;допуслуги, — подбираем тариф.</p></div>
+    <div class="dcard step"><div class="n">02</div><h3>4–5 дней: готовим всё</h3><p>Собираем трафик (Директ и&nbsp;Авито ADS), две посадочные для приёма заявок, ботов в&nbsp;Telegram/MAX, ваш сайт, CRM.</p></div>
+    <div class="dcard step"><div class="n">03</div><h3>Запуск и первые 2 недели</h3><p>Запускаем рекламу. Первые 2&nbsp;недели вы платите только рекламный бюджет: обучаем кампанию, обращения в&nbsp;начале могут стоить дороже.</p><div class="thumb" style="background-image:url('img/direkt-1.jpg')"></div></div>
+    <div class="dcard step"><div class="n">04</div><h3>Решение через 2 недели</h3><p>Пришло не&nbsp;менее 10&nbsp;заявок со&nbsp;спросом — вносите первый платёж и&nbsp;работаем дальше. Меньше 10 — за&nbsp;услугу не&nbsp;платите. Второй платёж — в&nbsp;конце реализации.</p></div>
+    <div class="dcard step"><div class="n">05</div><h3>Продление</h3><p>Работаем в&nbsp;долгую. Ведение после запуска: Яндекс Директ — 45&nbsp;т.р./мес, Авито ADS — 40&nbsp;т.р./мес. Директ проще всего масштабировать.</p></div>
+    <div class="wcard"><div class="wcap"><b>один из наших кейсов</b> · премиум-ремонт, Пенза</div>
+      <div class="img framed cover" style="background-image:url('img/case-penza.jpg')"></div>
+      <div style="font-size:17px;line-height:1.35;color:#14171a"><b>469 ₽ за заявку, 115 заявок в месяц</b>, 2–5 договоров, средний чек 4–7 млн ₽ <span style="color:#5c554a">(цифры с нашего сайта)</span></div></div>
+  </div>
+  <div class="pageno">11</div>
+</section>
+
+<!-- Как выглядят заявки -->
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">коммерческое предложение · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="head"><div>
+    <div class="kicker">Результат в мессенджере</div>
+    <h2 class="title">Вот так заявки приходят вам в&nbsp;мессенджер</h2>
+  </div><div class="tag">пример заявки</div></div>
+  <div class="body" style="grid-template-columns: 1fr 620px;">
+    <div class="wcard" style="display:grid;grid-template-columns:0.74fr 1fr 0.74fr;grid-template-rows:auto 1fr;column-gap:14px">
+      <div class="wcap" style="grid-column:1/-1">заявки приходят в мессенджер: город, тип ремонта, площадь, срок и бюджет — телефоны скрыты</div>
+      <div class="img cover" style="background-image:url('img/lead-spb.jpg')"></div>
+      <div class="img cover" style="background-image:url('img/lead-ivanovo.jpg')"></div>
+      <div class="img cover" style="background-image:url('img/lead-vnovgorod.jpg')"></div>
+    </div>
+    <div class="dcard accent" style="display:flex;flex-direction:column">
+      <div class="label">Кейс · ремонт квартир под ключ, Краснодар</div>
+      <h3>Комплексная система для ремонтной компании</h3>
+      <p>Сайт с&nbsp;квизом и&nbsp;реклама в&nbsp;Яндекс Директе — та&nbsp;же связка, которую мы запускаем для вас.</p>
+      <div class="kv" style="margin:16px 0 14px">
+        <div>Цена заявки<b>758 ₽</b></div>
+        <div>Заявок в месяц<b>62</b></div>
+        <div>Договоров в месяц<b>2–6</b></div>
+        <div>Средний чек договора<b>1–3 млн ₽</b></div>
+      </div>
+      <div class="img" style="margin-top:auto;border-radius:12px;background-color:#fff;background-image:url('img/case-krasnodar.jpg');background-size:contain;background-position:center"></div>
+      <p style="font-size:15px;margin-top:12px;color:#8b93a3">Цифры с&nbsp;нашего сайта. Результат в&nbsp;вашем городе зависит от&nbsp;конкуренции, сезона и&nbsp;предложения — стоимость заявки и&nbsp;число заявок не&nbsp;обещаем.</p>
+    </div>
+  </div>
+  <div class="pageno">12</div>
+</section>
+
+<!-- Тариф «Комплексная система» -->
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">коммерческое предложение · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="tariff" style="flex:1;min-height:0">
+    <div class="tariff-head"><div>
+      <h2 class="title" style="font-size:44px;max-width:1300px">Управляемый и&nbsp;масштабируемый поток квал.&nbsp;лидов: <span class="accent">комплексная система</span></h2>
+    </div><div class="price">76&nbsp;т.р.<span class="tot">оплата <b>50/50</b></span></div></div>
+    <div class="tt six" style="grid-template-columns:repeat(6,1fr);grid-template-rows:auto auto 1fr auto"><div class="grp a" style="grid-column:span 3">Основа</div><div class="grp b" style="grid-column:span 1">Трафик</div><div class="grp a" style="grid-column:span 1">Сайт</div><div class="grp b" style="grid-column:span 1">Продажи</div><div class="col-h">Маркетинговое исследование</div><div class="col-h">Посадочные с квизом</div><div class="col-h">Бот-прогрев</div><div class="col-h">Директ + Авито ADS<span class="new">два канала</span></div><div class="col-h">Сайт под ваши услуги<span class="new">новое</span></div><div class="col-h">CRM и материалы</div><div class="col"><ul class="list"><li>Целевая аудитория: кто заказывает ремонт и что для него важно</li><li>Анализ конкурентов и ваше отличие</li><li>Позиционирование — на нём строим офферы и квиз</li></ul></div><div class="col"><ul class="list"><li>Две посадочные: квиз на сайте и квиз с переходом в мессенджер</li><li>Квиз: тип жилья, площадь, вид ремонта, сроки</li><li>Расчёт стоимости в 3 вариантах</li></ul></div><div class="col"><ul class="list"><li>Боты в Telegram и MAX</li><li>Приветствие, фото работ, условия, вопросы о ремонте</li><li>Заявка сразу у вас</li></ul></div><div class="col"><ul class="list"><li>Яндекс Директ — основной источник</li><li>Авито ADS — та же воронка, другая аудитория</li><li>Объявления под каждую услугу</li></ul></div><div class="col"><ul class="list"><li>Сайт под ваши основные услуги «под ключ»</li><li>Прогревает заявку после объявления</li><li>Базовое SEO</li></ul></div><div class="col"><ul class="list"><li>Своя CRM для учёта заявок</li><li>Материалы по продажам: звонок, замер, договор</li><li>Telegram-бот учёта лидов</li></ul></div><div style="padding:14px 18px;background:#fdecc8;border-left:1px solid #e7e2d8;border-top:2px solid #ef9f27;font-size:18px;line-height:1.3;color:#14171a"><span style="font-family:var(--ed-font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#cf7b3d;display:block;margin-bottom:4px">Результат</span><b>Платёжеспособные аудитории и площадки</b></div><div style="padding:14px 18px;background:#fdecc8;border-left:1px solid #e7e2d8;border-top:2px solid #ef9f27;font-size:18px;line-height:1.3;color:#14171a"><span style="font-family:var(--ed-font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#cf7b3d;display:block;margin-bottom:4px">Результат</span><b>2 сайта: 50–600 заявок в мес., 7–8% в оплату</b></div><div style="padding:14px 18px;background:#fdecc8;border-left:1px solid #e7e2d8;border-top:2px solid #ef9f27;font-size:18px;line-height:1.3;color:#14171a"><span style="font-family:var(--ed-font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#cf7b3d;display:block;margin-bottom:4px">Результат</span><b>Заявка за минуту получает расчёт</b></div><div style="padding:14px 18px;background:#fdecc8;border-left:1px solid #e7e2d8;border-top:2px solid #ef9f27;font-size:18px;line-height:1.3;color:#14171a"><span style="font-family:var(--ed-font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#cf7b3d;display:block;margin-bottom:4px">Результат</span><b>Два канала: больше и дешевле лиды</b></div><div style="padding:14px 18px;background:#fdecc8;border-left:1px solid #e7e2d8;border-top:2px solid #ef9f27;font-size:18px;line-height:1.3;color:#14171a"><span style="font-family:var(--ed-font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#cf7b3d;display:block;margin-bottom:4px">Результат</span><b>Свой инструмент продаж</b></div><div style="padding:14px 18px;background:#fdecc8;border-left:1px solid #e7e2d8;border-top:2px solid #ef9f27;font-size:18px;line-height:1.3;color:#14171a"><span style="font-family:var(--ed-font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#cf7b3d;display:block;margin-bottom:4px">Результат</span><b>Лиды не теряются, замеров +16%</b></div></div>
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div class="terms4" style="grid-template-columns:repeat(3,1fr)"><div class="dcard"><div class="label">Платёж 1</div><h3>38&nbsp;т.р.</h3><p>После 2&nbsp;недель рекламы</p></div><div class="dcard"><div class="label">Платёж 2</div><h3>38&nbsp;т.р.</h3><p>В&nbsp;конце реализации связки и&nbsp;рекламы (под конец месяца)</p></div><div class="dcard"><div class="label">Срок реализации</div><h3>Неделя + месяц</h3><p>Реализация — неделя+ (трафик, сайты, боты, CRM), затем ведение — месяц (4 недели)</p></div></div>
+      <div class="terms4" style="grid-template-columns:1fr"><div class="dcard accent"><div class="label">Оффер · гарантия</div><h3 style="margin:0;font-size:26px;line-height:1.25">Первые 2&nbsp;недели вы платите только за&nbsp;рекламу. Приведём не&nbsp;менее 10&nbsp;заявок со&nbsp;спросом на&nbsp;ремонт за&nbsp;эти 2&nbsp;недели — иначе за&nbsp;услугу не&nbsp;платите.</h3></div>
+    </div>
+  </div>
+  <div class="pageno">13</div>
+</section>
+
+<!-- Тариф «Быстрый старт» -->
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">коммерческое предложение · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="tariff" style="flex:1;min-height:0">
+    <div class="tariff-head"><div>
+      <h2 class="title">«Быстрый старт»</h2>
+    </div><div class="price">62&nbsp;т.р.<span class="tot">оплата <b>50/50</b></span></div></div>
+    <div class="tt six" style="grid-template-columns:repeat(6,1fr);grid-template-rows:auto auto 1fr auto"><div class="grp a" style="grid-column:span 2">Основа</div><div class="grp b" style="grid-column:span 1">Трафик</div><div class="grp a" style="grid-column:span 2">Заявки</div><div class="grp b" style="grid-column:span 1">Продажи</div><div class="col-h">Маркетинговое исследование</div><div class="col-h">Посадочная с квизом</div><div class="col-h">Яндекс Директ</div><div class="col-h">Бот-прогрев</div><div class="col-h">Учёт заявок</div><div class="col-h">Материалы для продаж</div><div class="col"><ul class="list"><li>Целевая аудитория: кто заказывает ремонт и что для него важно</li><li>Анализ конкурентов и ваше отличие</li><li>Позиционирование — на нём строим офферы и квиз</li></ul></div><div class="col"><ul class="list"><li>Страница «Ремонт квартир под ключ» под ваш город</li><li>Квиз: тип жилья, комнаты, площадь, вид ремонта, сроки</li><li>Расчёт стоимости в 3 вариантах</li></ul></div><div class="col"><ul class="list"><li>Запуск по проверенной связке</li><li>Работа кампании в течение месяца</li><li>Основной источник: его проще всего масштабировать</li></ul></div><div class="col"><ul class="list"><li>Бот в Telegram и MAX</li><li>Приветствие, фото работ, условия, вопросы о ремонте</li><li>Расчёт стоимости за 1 минуту</li></ul></div><div class="col"><ul class="list"><li>Telegram-бот учёта лидов — заявка сразу у вас</li><li>Своя CRM для заявок и клиентов</li></ul></div><div class="col"><ul class="list"><li>Материалы по продажам: звонок, замер, договор</li><li>Порядок работы с заявкой: реакция в течение 15 минут</li></ul></div><div style="padding:14px 18px;background:#fdecc8;border-left:1px solid #e7e2d8;border-top:2px solid #ef9f27;font-size:18px;line-height:1.3;color:#14171a"><span style="font-family:var(--ed-font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#cf7b3d;display:block;margin-bottom:4px">Результат</span><b>Платёжеспособные аудитории и площадки</b></div><div style="padding:14px 18px;background:#fdecc8;border-left:1px solid #e7e2d8;border-top:2px solid #ef9f27;font-size:18px;line-height:1.3;color:#14171a"><span style="font-family:var(--ed-font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#cf7b3d;display:block;margin-bottom:4px">Результат</span><b>Страница под трафик: заявки с расчётом</b></div><div style="padding:14px 18px;background:#fdecc8;border-left:1px solid #e7e2d8;border-top:2px solid #ef9f27;font-size:18px;line-height:1.3;color:#14171a"><span style="font-family:var(--ed-font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#cf7b3d;display:block;margin-bottom:4px">Результат</span><b>Стабильный канал: 50–600 заявок в мес.</b></div><div style="padding:14px 18px;background:#fdecc8;border-left:1px solid #e7e2d8;border-top:2px solid #ef9f27;font-size:18px;line-height:1.3;color:#14171a"><span style="font-family:var(--ed-font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#cf7b3d;display:block;margin-bottom:4px">Результат</span><b>Заявка за минуту получает расчёт</b></div><div style="padding:14px 18px;background:#fdecc8;border-left:1px solid #e7e2d8;border-top:2px solid #ef9f27;font-size:18px;line-height:1.3;color:#14171a"><span style="font-family:var(--ed-font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#cf7b3d;display:block;margin-bottom:4px">Результат</span><b>Лиды не теряются</b></div><div style="padding:14px 18px;background:#fdecc8;border-left:1px solid #e7e2d8;border-top:2px solid #ef9f27;font-size:18px;line-height:1.3;color:#14171a"><span style="font-family:var(--ed-font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#cf7b3d;display:block;margin-bottom:4px">Результат</span><b>Замеры назначаются, а не сливаются</b></div></div>
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div class="terms4" style="grid-template-columns:repeat(3,1fr)"><div class="dcard"><div class="label">Платёж 1</div><h3>31&nbsp;т.р.</h3><p>После 2&nbsp;недель рекламы</p></div><div class="dcard"><div class="label">Платёж 2</div><h3>31&nbsp;т.р.</h3><p>В&nbsp;конце реализации связки и&nbsp;рекламы (под конец месяца)</p></div><div class="dcard"><div class="label">Срок реализации</div><h3>4 дня + месяц</h3><p>Запуск — 4 дня (посадочная, бот, CRM, Директ), затем ведение — месяц (4 недели)</p></div></div>
+      <div class="terms4" style="grid-template-columns:1fr"><div class="dcard accent"><div class="label">Оффер · гарантия</div><h3 style="margin:0;font-size:26px;line-height:1.25">Первые 2&nbsp;недели вы платите только за&nbsp;рекламу. Приведём не&nbsp;менее 10&nbsp;заявок со&nbsp;спросом на&nbsp;ремонт за&nbsp;эти 2&nbsp;недели — иначе за&nbsp;услугу не&nbsp;платите.</h3></div>
+    </div>
+  </div>
+  <div class="pageno">14</div>
+</section>
+
+
+<!-- Подарок -->
+<section class="page">
+  <div class="topbar">
+    <div class="logo">Exponent<span>.digital</span></div>
+    <div class="meta">коммерческое предложение · <b>ремонт квартир</b> · 2026</div>
+  </div>
+  <div class="head"><div>
+    <div class="kicker">Бонус · при старте в&nbsp;ближайшие 2&nbsp;дня</div>
+    <h2 class="title">Подарок: оформление профиля и&nbsp;карточек на&nbsp;Авито</h2>
+    <p class="sub">Начните работу по тарифу «Комплексная система» в&nbsp;ближайшие 2&nbsp;дня — оформим профиль и&nbsp;карточки вашей компании на&nbsp;Авито <b>бесплатно</b>.</p>
+  </div><div class="tag">подарок</div></div>
+  <div class="body" style="grid-template-columns:1fr 800px">
+    <div style="display:grid;grid-template-rows:auto 1fr 1fr;gap:20px;min-height:0">
+      <div class="dcard accent" style="display:flex;align-items:center;gap:36px;padding:22px 30px">
+        <div style="flex:none"><div class="label">Стоимость услуги</div><div style="font-family:var(--ed-font-display);font-weight:800;font-size:64px;letter-spacing:-0.03em;line-height:1;color:#8b93a3;text-decoration:line-through;text-decoration-thickness:4px;text-decoration-color:var(--ed-orange)">30&nbsp;000&nbsp;₽</div></div>
+        <div><h3 style="font-size:30px;line-height:1.2;margin:0 0 8px">Делаем бесплатно — при&nbsp;старте в&nbsp;ближайшие 2&nbsp;дня</h3><p>Обычно оформление профиля и&nbsp;карточек стоит 30&nbsp;000&nbsp;₽. Для тех, кто начинает работу по «Комплексной системе» в&nbsp;течение 2&nbsp;дней, — в&nbsp;подарок.</p></div>
+      </div>
+      <div class="dcard"><div class="label">Что делаем</div><ul class="list"><li>Оформляем профиль компании на&nbsp;Авито под основные услуги: либо только «ремонт квартир под ключ», либо ещё и&nbsp;другие услуги (капитальный, косметический, санузлы и&nbsp;т.д.)</li><li>Описание компании, фото работ, услуги и&nbsp;цены — как на&nbsp;скриншотах</li><li>Объявление с&nbsp;обложкой и&nbsp;понятными ценами под ваш город</li></ul></div>
+      <div class="dcard"><div class="label">Зачем это вам</div><ul class="list"><li><b>Бесплатный источник трафика:</b> профиль понемногу приводит клиентов с&nbsp;Авито без вложений в&nbsp;рекламу</li><li>Позже в&nbsp;этот профиль можно направить рекламный бюджет и&nbsp;усилить поток</li><li>Дополняет Директ и&nbsp;Авито ADS из&nbsp;тарифа</li></ul></div>
+    </div>
+    <div class="wcard" style="display:grid;grid-template-rows:auto 0.78fr auto 1.2fr;gap:10px">
+      <div class="wcap"><b>01</b> · так выглядит оформленный профиль компании на Авито</div>
+      <div class="img framed cover" style="background-image:url('img/avito-profile.png');background-position:left top"></div>
+      <div class="wcap"><b>02</b> · и объявление «Ремонт квартир под ключ»</div>
+      <div class="img framed cover" style="background-image:url('img/avito-listing.png');background-position:left top"></div>
+    </div>
+  </div>
+  <div class="pageno">15</div>
+</section>
+
+
+<div id="hint">← → / пробел / колесо · F — во весь экран</div>
+<script>
+(function(){
+  var pages=[].slice.call(document.querySelectorAll('.page')),total=pages.length,slides=[];
+  pages.forEach(function(p,i){
+    var s=document.createElement('div');s.className='slide';
+    var b=document.createElement('div');b.className='badge';b.innerHTML='<b>'+String(i+1).padStart(2,'0')+'</b> / '+String(total).padStart(2,'0');
+    var box=document.createElement('div');box.className='box';
+    p.parentNode.insertBefore(s,p);s.appendChild(b);s.appendChild(box);box.appendChild(p);slides.push({s:s,box:box,p:p});
+  });
+  function fit(){
+    var k=Math.min(innerWidth/1920,(innerHeight-44)/1080);
+    slides.forEach(function(o){o.box.style.width=(1920*k)+'px';o.box.style.height=(1080*k)+'px';o.p.style.transform='scale('+k+')'});
+  }
+  function cur(){return Math.round(scrollY/innerHeight)}
+  function go(i){i=Math.max(0,Math.min(total-1,i));slides[i].s.scrollIntoView({behavior:'smooth',block:'start'});history.replaceState(null,'','#'+(i+1))}
+  addEventListener('resize',fit);fit();
+  addEventListener('keydown',function(e){
+    var k=e.key;
+    if(k==='ArrowRight'||k==='ArrowDown'||k==='PageDown'||k===' '){e.preventDefault();go(cur()+1)}
+    else if(k==='ArrowLeft'||k==='ArrowUp'||k==='PageUp'){e.preventDefault();go(cur()-1)}
+    else if(k==='Home'){e.preventDefault();go(0)}else if(k==='End'){e.preventDefault();go(total-1)}
+    else if(k==='f'||k==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+  });
+  var h=parseInt(location.hash.slice(1),10);if(h>0&&h<=total)setTimeout(function(){document.documentElement.style.scrollBehavior='auto';slides[h-1].s.scrollIntoView({block:'start'});document.documentElement.style.scrollBehavior=''},50);
+})();
+</script>
+</body>
+</html>
